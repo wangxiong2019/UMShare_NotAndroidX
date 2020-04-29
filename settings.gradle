@@ -1,2 +1,2 @@
-include ':app'
+include ':app', ':libumshare'
 rootProject.name='UMShare'

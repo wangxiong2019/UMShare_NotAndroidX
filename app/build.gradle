@@ -1,24 +1,80 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.0"
+    compileSdkVersion 28
     defaultConfig {
         applicationId "com.zxf.umshare"
         minSdkVersion 21
-        targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        targetSdkVersion 28
+        versionCode 100
+        versionName "1.0.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    //MD5: F6:DF:87:AA:DE:3D:C2:FD:8A:2A:02:B8:EC:A4:A2:6F
+    //SHA1: D3:10:48:7B:DA:3F:C9:8E:83:AC:F4:C5:36:96:C4:84:3B:92:F4:6F
+    //SHA256: D4:8C:10:31:56:72:93:99:0E:18:60:03:15:38:59:22:CF:24:AA:B2:0A:9B:B0:7B:10:07:E3:E7:49:BB:B8:F9
+    //签名算法名称: SHA256withRSA
+    //根据包名得到的签名  f6df87aade3dc2fd8a2a02b8eca4a26f
+    signingConfigs {
+
+
+        def alias = "dsjsknx9a1"
+        def password = "dsjsknx9a1"
+        def filePath = "../dsjsknx9a1.jks"  //签名文件路径
+
+        release {
+            keyAlias alias
+            keyPassword password
+            storeFile file(filePath)
+            storePassword(password)
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
     }
     buildTypes {
         release {
+            minifyEnabled false //是否混淆
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+        debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
+
+
+        //自定义打包apk的名字以及路径，适用于AS 3.0+
+        android.applicationVariants.all { variant ->
+            variant.outputs.all { output ->
+                outputFileName = "umshare_" + defaultConfig.versionCode + ".apk"
+            }
+        }
+    }
+    sourceSets {
+        main {
+            //引用so文件第二种方式  重定向
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+
+    //解决 java.lang.BootstrapMethodError: Exception from call site #1 bootstrap method
+    compileOptions{
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
+allprojects {
+    repositories {
+        flatDir {
+            dirs 'libs'
+            //集成友盟分享sdk
+            dirs project(':libumshare').file('libs')
+        }
+    }
+}
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.1.0'
@@ -26,4 +82,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+
+    implementation project(':libumshare')
 }

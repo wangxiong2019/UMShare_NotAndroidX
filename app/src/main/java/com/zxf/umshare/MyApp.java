@@ -6,7 +6,6 @@ import android.util.Log;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
 import com.zxf.libumshare.UMShareUtil;
-import com.zxf.libumshare.UMTokenBack;
 import com.zxf.umshare.push.UmengNotificationService;
 
 /**
@@ -14,10 +13,9 @@ import com.zxf.umshare.push.UmengNotificationService;
  * 时间 2020/3/30
  * 类名
  */
-public class MyApp extends Application implements UMTokenBack {
+public class MyApp extends Application  {
     String UMPush_AppKey = "5e81bced978eea06fd7fc4a6";
     String Message_Secret = "04888162fe3a4431a542a33f8c892614";
-    public static String UMToekn = "";
 
     @Override
     public void onCreate() {
@@ -29,9 +27,7 @@ public class MyApp extends Application implements UMTokenBack {
     private void initUm() {
         UMShareUtil.getInstance().init(getApplicationContext());
         UMShareUtil.getInstance().initUM(UMPush_AppKey, Message_Secret, true);
-
         UMShareUtil.getInstance().initWXQQLogin(UMPush_AppKey, Message_Secret, "", "");
-
 
         initPush();
     }
@@ -53,9 +49,5 @@ public class MyApp extends Application implements UMTokenBack {
             }
         });
         mPushAgent.setPushIntentServiceClass(UmengNotificationService.class);
-    }
-    @Override
-    public void getUMToken(String token) {
-        UMToekn = token;
     }
 }

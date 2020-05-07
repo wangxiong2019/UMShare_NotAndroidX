@@ -70,10 +70,10 @@ public class UMShareUtil {
     }
 
 
-    static String WXAppId;//微信appId
-    static String WXAppSecret;//微信appSecret
-    static String QQAppId;//    QQ   appId
-    static String QQAppSecret;//QQ   appSecret
+    static String WXAppId;      //微信 appId
+    static String WXAppSecret;  //微信 appSecret
+    static String QQAppId;      //QQ   appId
+    static String QQAppSecret;  //QQ   appSecret
 
     public void initWXQQLogin(String WXAppId, String WXAppSecret, String QQAppId, String QQAppSecret) {
         //各个平台的配置，建议放在全局Application或者程序入口
@@ -104,9 +104,6 @@ public class UMShareUtil {
                         SHARE_MEDIA.QQ,
                         SHARE_MEDIA.QZONE
                 )
-                //SHARE_MEDIA.WEIXIN_FAVORITE,
-                //SHARE_MEDIA.QZONE,
-                //SHARE_MEDIA.QQ
                 .setShareboardclickCallback(new ShareBoardlistener() {
                     @Override
                     public void onclick(SnsPlatform snsPlatform, SHARE_MEDIA share_media) {

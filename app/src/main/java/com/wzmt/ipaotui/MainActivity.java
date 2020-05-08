@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         tv_share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bitmap = ((BitmapDrawable) getResources().getDrawable(R.drawable.ic_launcher)).getBitmap();
+                bitmap = ((BitmapDrawable) getResources().getDrawable(R.drawable.card_hongbao)).getBitmap();
 
                 if (bitmap == null) {
                     Log.e(TAG, "bitmap为空");
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 UMShareUtil.getInstance().shareSinglePlatform(mActivity,
-                        R.mipmap.ic_launcher,
+                        R.drawable.card_hongbao,
                         SHARE_MEDIA.WEIXIN,
                         "http://www.baidu.com",
                         "您好这是测试",

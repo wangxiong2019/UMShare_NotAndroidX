@@ -1,2 +1,2 @@
 include ':app', ':libumshare'
-rootProject.name='UMShare'
+rootProject.name='UMShare_NotAndroidX'

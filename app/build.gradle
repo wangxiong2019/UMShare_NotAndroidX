@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.zxf.umshare"
+        applicationId "com.wzmt.ipaotui"
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 100
@@ -18,9 +18,9 @@ android {
     signingConfigs {
 
 
-        def alias = "dsjsknx9a1"
-        def password = "dsjsknx9a1"
-        def filePath = "../dsjsknx9a1.jks"  //签名文件路径
+        def alias = "androiddebugkey"
+        def password = "android"
+        def filePath = "../debug.keystore"  //签名文件路径
 
         release {
             keyAlias alias
@@ -30,6 +30,7 @@ android {
             v1SigningEnabled true
             v2SigningEnabled true
         }
+
     }
     buildTypes {
         release {
@@ -83,6 +84,8 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
+    //权限
+    implementation 'com.github.dfqin:grantor:2.5'
 
     implementation project(':libumshare')
 }

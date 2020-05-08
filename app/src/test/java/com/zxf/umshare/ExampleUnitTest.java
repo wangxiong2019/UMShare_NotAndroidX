@@ -1,4 +1,4 @@
-package com.zxf.umshare;
+package com.wzmt.ipaotui;
 
 import org.junit.Test;
 

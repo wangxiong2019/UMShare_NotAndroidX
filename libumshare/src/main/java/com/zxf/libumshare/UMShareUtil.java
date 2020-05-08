@@ -17,6 +17,8 @@ import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMAuthListener;
+import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
@@ -26,6 +28,7 @@ import com.umeng.socialize.shareboard.SnsPlatform;
 import com.umeng.socialize.utils.ShareBoardlistener;
 
 import java.io.ByteArrayOutputStream;
+import java.util.Map;
 
 /**
  * 创建 by hero
@@ -92,7 +95,10 @@ public class UMShareUtil {
 
 
     public void shareImage(final Activity mActivity, Bitmap bitmap) {
-
+        if(bitmap==null){
+            Log.e(TAG, "bitmap为空");
+            return;
+        }
         final UMImage image = new UMImage(mActivity, bitmap);//本地文件
 
         mShareListener = new CustomShareListener(mActivity);
@@ -271,5 +277,55 @@ public class UMShareUtil {
 
         }
         return bitmap;
+    }
+
+
+    /**
+     * 微信  QQ登录
+     */
+    GetWXQQUid getWXQQUid;
+    Activity mActivity;
+    public void WXQQlogin(Activity mActivity,SHARE_MEDIA share_media,GetWXQQUid getWXQQUid){
+        this.getWXQQUid=getWXQQUid;
+        this.mActivity=mActivity;
+        UMShareAPI.get(mActivity).getPlatformInfo(mActivity, share_media, authListener);
+    }
+
+    UMAuthListener authListener = new UMAuthListener() {
+        @Override
+        public void onStart(SHARE_MEDIA platform) {
+
+        }
+
+        @Override
+        public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
+
+            Log.e("platform=", platform + "data=" + data.toString());
+            String uid="";
+            for (String key : data.keySet()) {
+                Log.e("key", key + " : " + data.get(key));
+                if (key.equals("uid")) {
+                    uid = data.get(key);
+                    Log.e("uid", uid);
+                    getWXQQUid.getUid(uid);
+
+                }
+            }
+
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA platform, int action, Throwable t) {
+            Toast.makeText(mContext, "登录错误:" + t.getMessage(),Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA platform, int action) {
+
+        }
+    };
+
+    public interface GetWXQQUid{
+        void getUid(String uid);
     }
 }

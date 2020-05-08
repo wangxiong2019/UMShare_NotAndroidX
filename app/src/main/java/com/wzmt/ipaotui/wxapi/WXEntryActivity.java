@@ -1,4 +1,4 @@
-package com.zxf.libumshare.wxapi;
+package com.wzmt.ipaotui.wxapi;
 
 
 import com.umeng.socialize.weixin.view.WXCallbackActivity;
